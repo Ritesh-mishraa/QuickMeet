@@ -1,4 +1,4 @@
-let IS_PROD = false; // Change this to true for production
+let IS_PROD = true; // Change this to true for production
 
 const servers = IS_PROD
   ? "https://quickmeet-mnac.onrender.com/"
