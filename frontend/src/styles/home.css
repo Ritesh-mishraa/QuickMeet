@@ -1,0 +1,43 @@
+.meetContainer {
+  display: flex;
+  height: 100vh;
+}
+.leftPanel {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background: rgb(1, 4, 48);
+  color: white;
+  margin-bottom: 0px;
+  margin-top: 30px;
+
+}
+.rightPanel {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  background: rgb(240, 240, 240);
+}
+/* .h2{
+    font-size: 2rem;
+    gap: 20px;
+    padding: 20px;
+
+} */
+
+.navBar{
+  position: fixed;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #2a165c;
+  color: white;
+}

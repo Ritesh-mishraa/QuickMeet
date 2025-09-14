@@ -1,0 +1,20 @@
+.navList button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #FF9839;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    
+}
+.btn{
+    padding: 10px 20px;
+    border: none;
+    background-color: #FF9839;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
