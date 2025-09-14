@@ -86,8 +86,6 @@ function HomeComponent() {
           <div>
             <h2 className="h2">Providing Quality Video Call </h2>
 
-            
-
             <div style={{ display: "flex", gap: "10px", color: "white" }}>
               <TextField
                 onChange={(e) => setMeetingCode(e.target.value)}
