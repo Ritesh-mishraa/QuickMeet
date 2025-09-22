@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../App.css";
 import "../styles/landingPage.css";
 import { ReactTyped } from "react-typed";
+import navbar from "./navbar.jsx";
 
 export default function landing() {
   return (
