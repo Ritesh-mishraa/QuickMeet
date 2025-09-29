@@ -1,43 +1,112 @@
-.meetContainer {
-  display: flex;
-  height: 100vh;
-}
-.leftPanel {
-  flex: 1;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  background: rgb(1, 4, 48);
-  color: white;
-  margin-bottom: 0px;
-  margin-top: 30px;
 
+/* --- General Setup & Body --- */
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: rgb(240, 240, 240); /* Set a base background */
 }
-.rightPanel {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
-  background: rgb(240, 240, 240);
+
+/* This ensures padding and border are included in the element's total width and height,
+  which makes layout calculations much more predictable.
+*/
+* {
+  box-sizing: border-box;
 }
-/* .h2{
-    font-size: 2rem;
-    gap: 20px;
-    padding: 20px;
 
-} */
-
-.navBar{
+/* --- Fixed Navigation Bar --- */
+.navBar {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 1rem 5%; /* Use responsive units */
   background-color: #2a165c;
   color: white;
+  z-index: 1000; /* Ensure it stays above other content */
+  height: 70px; /* Define a fixed height */
+}
+
+.h2{
+  margin-bottom: 20px;
+}
+
+/* === Mobile-First Base Styles (Default) === */
+/* The layout is a single column by default, perfect for mobile. */
+.meetContainer {
+  display: flex;
+  flex-direction: column; /* Stack panels vertically on mobile */
+  min-height: 100vh; /* Use min-height to allow content to grow */
+  /* IMPORTANT: Add padding-top to prevent the fixed navbar from overlapping the content.
+    The value should be equal to the height of your .navBar.
+  */
+  padding-top: 70px;
+}
+
+.leftPanel {
+  background: rgb(1, 4, 48);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px; /* Add padding for content spacing */
+}
+
+.rightPanel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+ 
+  /* Remove the grey background for mobile to blend with the body */
+}
+
+/* Ensure images scale properly and don't overflow */
+.rightPanel img {
+  max-width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  display: block;
+}
+
+/* === Tablet and Larger Screens (min-width: 768px) === */
+/* If the screen width is 768px or wider, these styles will apply,
+  changing the layout to be side-by-side.
+*/
+@media (min-width: 768px) {
+  .meetContainer {
+    flex-direction: row; /* Change to a horizontal layout */
+  }
+
+  .leftPanel {
+    flex-basis: 50%; /* Takes up 60% of the container's width */
+    height: calc(100vh - 70px); /* Fill the viewport height minus the navbar */
+    overflow-y: auto; /* Allow scrolling if content is too tall */
+    align-items: flex-start; /* Align content to the left */
+    text-align: left;
+    padding: 40px 5%;
+  }
+
+  .rightPanel {
+    flex-basis: 50%; /* Takes up 40% of the container's width */
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+     background: rgb(240, 240, 240);/* 
+    Re-apply background for desktop view */
+    
+  }
+}
+
+/* === Large Desktop Screens (Optional) === */
+/* You can add another breakpoint for very large screens if needed */
+@media (min-width: 1200px) {
+  .leftPanel,
+  .navBar {
+    padding-left: 10%; /* Increase padding on very wide screens */
+    padding-right: 10%;
+  }
+  
 }

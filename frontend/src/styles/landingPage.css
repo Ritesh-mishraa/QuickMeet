@@ -23,7 +23,6 @@ nav {
   justify-content: space-around;
   align-items: center;
   padding: 0 20px;
-  background: url("/public/background.png") no-repeat center center fixed;
   background-size: cover;
   flex-wrap: wrap;
 }
@@ -82,13 +81,14 @@ nav {
   }
 
   .landingPageTextContainer {
+    flex: 60%;
     align-items: center;
     text-align: center;
   }
 
   .landingPageImageContainer {
     margin-top: 20px;
-    flex: none;
+    flex: 40%;
     width: 80%;
   }
 
@@ -123,10 +123,12 @@ nav {
 
   .landingPageImageContainer {
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .landingPageImageContainer img {
-    max-width: 90%;
-   
+    flex: 50%;
+    width: 10%;
   }
 }

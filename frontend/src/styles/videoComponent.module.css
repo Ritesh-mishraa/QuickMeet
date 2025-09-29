@@ -1,4 +1,4 @@
-.meetVideoContainer {
+ .meetVideoContainer {
     position: relative;
     height: 100vh;
     background: rgb(1, 4, 48);
@@ -68,7 +68,7 @@
     height: 100vh;
     gap: 20px;
     background: rgb(1, 4, 48);
-    /* color: white; */
+    
 }
 
 .lobbyContainer h2{
@@ -90,3 +90,9 @@
   border: 2px solid #3f51b5;
 }
  */
+
+
+
+
+
+ 
