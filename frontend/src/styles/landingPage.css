@@ -1,15 +1,26 @@
-
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
   height: 100%;
 }
 
+.landingPageContainer {
+  width: 100vw;
+  height: 100vh;
+  background: url("/public/background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+}
+
 nav {
   width: 100%;
-  padding: 20px 40px;
+  padding-inline: 1.2rem;
+  padding-block: 1.6rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   position: absolute;
   top: 0;
   left: 0;
@@ -17,8 +28,19 @@ nav {
   z-index: 10;
 }
 
+.landingPageContainer nav h2 {
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.landingPageContainer nav .navList {
+  display: flex;
+  gap: 1.6rem;
+  cursor: pointer;
+}
+
 .landingPageMainContainer {
-  min-height: 100vh; 
+  min-height: 100vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -26,6 +48,30 @@ nav {
   background-size: cover;
   flex-wrap: wrap;
 }
+
+.landingPageMainContainer > div:nth-child(1) {
+  font-size: 2.2rem;
+}
+
+.landingPageMainContainer > div:nth-child(1) div[role="button"] {
+  background: #d97500;
+  width: fit-content;
+  padding: 1rem;
+  border-radius: 20px;
+  margin-top: 1.2rem;
+}
+
+.landingPageMainContainer > div:nth-child(1) div[role="button"] a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.landingPageMainContainer > div:nth-child(2) img {
+  height: 70vh;
+  width: auto;
+}
+
 .landingPageImageContainer {
   flex: 40%;
   text-align: center;
@@ -38,38 +84,35 @@ nav {
 }
 
 .navList button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #FF9839;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    
+  padding: 10px 20px;
+  border: none;
+  background-color: #ff9839;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
 }
-.btn{
-    padding: 10px 20px;
-    border: none;
-    background-color: #FF9839;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 20px;
+.btn {
+  padding: 10px 20px;
+  border: none;
+  background-color: #ff9839;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
 }
-
 
 .landingPageTextContainer {
-    padding: 50px;
-    flex: 60%;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 20px;
+  padding: 50px;
+  flex: 60%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
 }
-
 
 /* === Tablet (≤ 1024px) === */
 @media (max-width: 1024px) {
@@ -78,6 +121,11 @@ nav {
     text-align: center;
     padding: 20px;
     height: auto;
+  }
+
+  .landingPageMainContainer > div:nth-child(2) img {
+    height: 48vh;
+    width: auto;
   }
 
   .landingPageTextContainer {
@@ -90,18 +138,13 @@ nav {
     margin-top: 20px;
     flex: 40%;
     width: 80%;
+    height: 70vh;
   }
 
-  .landingPageImageContainer img {
-  max-width: 80%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-    .landingPageTextContainer h1 {
-        font-size: 2.5rem;
-        line-height: 3rem;
-}
+  .landingPageTextContainer h1 {
+    font-size: 2.5rem;
+    line-height: 3rem;
+  }
 }
 
 /* === Mobile (≤ 600px) === */
@@ -120,15 +163,14 @@ nav {
     padding: 8px 16px;
     font-size: 14px;
   }
+  .landingPageMainContainer > div:nth-child(2) img {
+    height: 34vh;
+    width: auto;
+  }
 
   .landingPageImageContainer {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-  }
-
-  .landingPageImageContainer img {
-    flex: 50%;
-    width: 10%;
   }
 }
