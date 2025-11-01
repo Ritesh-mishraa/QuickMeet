@@ -455,13 +455,29 @@ export default function VideoMeetComponent() {
     setScreen(!screen);
   };
 
+  // let handleEndCall = () => {
+  //   try {
+  //     let tracks = localVideoref.current.srcObject.getTracks();
+  //     tracks.forEach((track) => track.stop());
+  //   } catch (e) {}
+  //   window.location.href = "/";
+  // };
+
   let handleEndCall = () => {
-    try {
-      let tracks = localVideoref.current.srcObject.getTracks();
-      tracks.forEach((track) => track.stop());
-    } catch (e) {}
-    window.location.href = "/";
-  };
+  try {
+    let tracks = localVideoref.current?.srcObject?.getTracks();
+    tracks?.forEach((track) => track.stop());
+  } catch (e) {
+    console.log(e);
+  }
+
+  // Reset app state to lobby view
+  setAskForUsername(true);   // show lobby again
+  setUsername("");           // clear username
+  setVideos([]);             // clear connected videos
+  setModal(false);           // close chat
+};
+
 
   let openChat = () => {
     setModal(true);
@@ -488,7 +504,6 @@ export default function VideoMeetComponent() {
     console.log(socketRef.current);
     socketRef.current.emit("chat-message", message, username);
     setMessage("");
-
     // this.setState({ message: "", sender: username })
   };
 
@@ -502,7 +517,6 @@ export default function VideoMeetComponent() {
       {askForUsername === true ? (
         <div className={styles.lobbyContainer}>
           {/* <h2>Enter the Room</h2> */}
-
           <Typography
             variant="h4"
             align="center"
