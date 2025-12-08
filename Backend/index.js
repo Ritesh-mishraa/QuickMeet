@@ -6,8 +6,8 @@ import { Server } from "socket.io";
 import mongoose from "mongoose";
 import cors from 'cors';
 
-import { connectToSocket } from './controllers/socketManager.js';
-import userRoutes from './routes/user.routes.js';
+import { connectToSocket } from './src/controllers/socketManager.js';
+import userRoutes from './src/routes/user.routes.js';
 
 dotenv.config({ path: '../.env', debug: true }); 
 const app = express();
@@ -20,7 +20,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.set("port", process.env.PORT || 8000); // Use PORT from .env
+app.set("port", process.env.PORT || 8000); 
 
 app.use(express.json({limit: '40kb'}));
 app.use(express.urlencoded({ limit: '40kb', extended: true }));
