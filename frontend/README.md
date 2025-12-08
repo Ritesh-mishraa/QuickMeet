@@ -1,70 +1,143 @@
-# Getting Started with Create React App
+# QuickMeet 🎥
+Live Demo: https://quickmeetfrontend-2bay.onrender.com/
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Connect with your Loved Ones, Team, and World. A premium, secure, and high-quality video conferencing application built for seamless communication.
 
-## Available Scripts
+QuickMeet provides a crystal-clear video calling experience with low latency, wrapped in a modern Dark Glassmorphism UI. Whether for professional meetings or catching up with friends, QuickMeet bridges the distance.
 
-In the project directory, you can run:
+🚀 Features
+-> High-Quality Video & Audio: Built on WebRTC for peer-to-peer real-time communication.
 
-### `npm start`
+-> Real-time Chat: Integrated in-meeting messaging system using Socket.io.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+-> Screen Sharing: Share your screen effortlessly for presentations and collaboration.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+-> Secure Authentication:
 
-### `npm test`
+    - Custom JWT Authentication (Login/Register).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    - Google OAuth integration for one-click sign-in.
 
-### `npm run build`
+    - Forgot Password flow via email.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-> Meeting History: Track your past meetings and join codes.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+-> Premium UI/UX:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    - Fully responsive Dark Mode design.
 
-### `npm run eject`
+    - Glassmorphism aesthetics using Material UI (MUI).
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    - Smooth animations with Framer Motion.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+-> Smart Meeting Controls: Toggle Audio/Video, "Picture-in-Picture" local view, and dynamic grid layout.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+🛠 Tech Stack
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# Frontend
 
-## Learn More
+-> React.js - Component-based UI library.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+-> Material UI (MUI) - Styling and Design System.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+-> Framer Motion - Animations and transitions.
+-> Socket.io-client - Real-time signaling.
 
-### Code Splitting
+-> Context API - State management (Auth & Meeting state).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+# Backend
 
-### Analyzing the Bundle Size
+-> Node.js - Runtime environment.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+-> Express.js - Web framework.
 
-### Making a Progressive Web App
+-> Socket.io - WebSocket implementation for signaling and chat.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+-> MongoDB - Database for user data and meeting history.
 
-### Advanced Configuration
+-> Mongoose - ODM for MongoDB.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+-> JWT - Authentication tokens.
 
-### Deployment
+-> Nodemailer - Email service for password recovery.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+-> Google OAuth - Third-party authentication.
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+⚙️ Installation & Setup
+
+Follow these steps to run QuickMeet locally.
+
+# Prerequisites
+
+-> Node.js (v14+)
+
+-> npm or yarn
+
+-> MongoDB (Local or Atlas URL)
+
+## Clone the Repository
+
+    git clone https://github.com/your-username/QuickMeet.git
+    cd QuickMeet
+
+## Backend Setup
+    cd backend
+    npm install
+    Create a .env file based on .env.example and fill in the required values.
+    npm start
+
+## Frontend Setup
+    cd ../frontend
+    npm install
+    Create a .env file based on .env.example and fill in the required values.
+    npm start
+
+📖 Usage Guide
+
+-> Register/Login: Create an account or sign in using Google.
+
+# Dashboard:
+
+-> Click "Create Meeting" to generate a unique code.
+
+-> Copy the code to the clipboard.
+
+-> Or, paste an existing code to "Join" a meeting.
+
+# Lobby:
+
+-> Preview your camera and microphone before entering.
+
+# Meeting Room:
+
+-> Use the bottom bar to mute audio, stop video, or share screen.
+
+-> Open the Chat sidebar to send messages.
+
+-> Click the Red Phone icon to leave.
+
+🔒 Security & Privacy
+
+-> End-to-end encryption for all video and audio streams.
+-> Secure JWT-based authentication.
+-> GDPR compliant data handling.
+-> No data is stored without user consent.
+
+🤝 Contributing
+
+Contributions are always welcome! If you'd like to improve the UI or add features (like recording or background blur), feel free to fork the repo.
+
+-> Fork the Project
+-> Create your Feature Branch (git checkout -b feature/AmazingFeature)
+-> Commit your Changes (git commit -m 'Add some AmazingFeature')
+-> Push to the Branch (git push origin feature/AmazingFeature)
+-> Open a Pull Request
+
+📞 Contact
+For any questions or support, reach out at:
+rajmi8948360380@gmail.com
+
+
+
+Project Link: https://github.com/Ritesh-mishraa/QuickMeet
