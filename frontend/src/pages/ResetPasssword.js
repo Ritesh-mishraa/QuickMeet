@@ -11,10 +11,13 @@ export default function ResetPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const backendUrl =
+        process.env.REACT_APP_BACKEND_URL || "http://localhost:8000";
 
-      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
-
-      const res = await axios.post(`${backendUrl}/api/v1/users/reset-password/${token}`, { password });
+      const res = await axios.post(
+        `${backendUrl}/api/v1/users/reset-password/${token}`,
+        { password }
+      );
       setMsg(res.data.msg);
     } catch (err) {
       setMsg(err.response?.data?.msg || "Something went wrong");
@@ -23,9 +26,19 @@ export default function ResetPassword() {
 
   return (
     <Container maxWidth="xs">
-      <Box sx={{ mt: 8, display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <Box
+        sx={{
+          mt: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <Typography variant="h5">Reset Password</Typography>
-        <form onSubmit={handleSubmit} style={{ width: "100%", marginTop: "20px" }}>
+        <form
+          onSubmit={handleSubmit}
+          style={{ width: "100%", marginTop: "20px" }}
+        >
           <TextField
             fullWidth
             label="New Password"

@@ -1,112 +1,410 @@
-
-/* --- General Setup & Body --- */
-body {
-  margin: 0;
-  font-family: sans-serif;
-  background-color: rgb(240, 240, 240); /* Set a base background */
+/* CSS variables (accent = orange/gold) */
+:root {
+  --bg-1: #040018;
+  --bg-2: #08021b;
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --accent: #ff8f3c; /* primary orange */
+  --accent-2: #ffbf6b; /* gold highlight */
+  --muted: #c9c7d9;
+  --text: #f6f6f9;
+  --panel-shadow: 0 20px 60px rgba(4, 2, 12, 0.65);
+  --glass-shadow: 0 12px 48px rgba(2, 6, 23, 0.6);
 }
 
-/* This ensures padding and border are included in the element's total width and height,
-  which makes layout calculations much more predictable.
-*/
+/* base */
 * {
   box-sizing: border-box;
 }
-
-/* --- Fixed Navigation Bar --- */
-.navBar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 5%; /* Use responsive units */
-  background-color: #2a165c;
-  color: white;
-  z-index: 1000; /* Ensure it stays above other content */
-  height: 70px; /* Define a fixed height */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: radial-gradient(
+      1200px 600px at 10% 10%,
+      rgba(255, 140, 60, 0.03),
+      transparent
+    ),
+    linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+  color: var(--text);
 }
 
-.h2{
-  margin-bottom: 20px;
-}
-
-/* === Mobile-First Base Styles (Default) === */
-/* The layout is a single column by default, perfect for mobile. */
-.meetContainer {
-  display: flex;
-  flex-direction: column; /* Stack panels vertically on mobile */
-  min-height: 100vh; /* Use min-height to allow content to grow */
-  /* IMPORTANT: Add padding-top to prevent the fixed navbar from overlapping the content.
-    The value should be equal to the height of your .navBar.
-  */
-  padding-top: 70px;
-}
-
-.leftPanel {
-  background: rgb(1, 4, 48);
-  color: white;
+/* root wrapper */
+.qm-root {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 40px 20px; /* Add padding for content spacing */
 }
 
-.rightPanel {
+/* NAVBAR */
+.qm-navbar {
+  height: 64px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 40px 20px;
- 
-  /* Remove the grey background for mobile to blend with the body */
+  justify-content: space-between;
+  padding: 12px 22px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(0, 0, 0, 0.06)
+  );
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(6px) saturate(120%);
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 
-/* Ensure images scale properly and don't overflow */
-.rightPanel img {
-  max-width: 100%;
-  height: auto; /* Maintain aspect ratio */
+.qm-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.qm-back {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  color: var(--muted);
+}
+.qm-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+}
+.qm-title {
+  font-weight: 800;
+  font-size: 18px;
+}
+
+/* right area buttons */
+.qm-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.qm-icon {
+  background: transparent;
+  border-radius: 8px;
+  padding: 6px;
+}
+.qm-logout {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--muted);
+  text-transform: none;
+  font-weight: 600;
+  padding: 6px 10px;
+}
+
+/* MAIN GRID */
+.qm-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  align-items: center;
+  padding: 64px;
+  width: 100%;
+}
+
+/* LEFT PANEL (content) */
+.qm-left-main {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 820px;
+}
+
+.qm-left-nav-left {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.qm-head {
+  font-size: clamp(1.6rem, 3.6vw, 3rem);
+  margin: 0;
+  line-height: 1.02;
+  font-weight: 900;
+  letter-spacing: -0.6px;
+  color: var(--text);
+}
+.qm-accent {
+  color: var(--accent);
+  text-shadow: 0 6px 30px rgba(255, 140, 60, 0.06);
+}
+.qm-lead {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+/* controls row */
+.qm-controls {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.qm-controls .MuiOutlinedInput-root {
+  min-width: 320px;
+}
+.qm-controls .MuiOutlinedInput-root fieldset {
+  border-color: transparent;
+}
+.qm-controls .MuiOutlinedInput-root:hover fieldset {
+  border-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Impactful glowing join button */
+.qm-joinBtn {
+  border: none;
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  color: #0b0b0b;
+  padding: 11px 20px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 0.98rem;
+  letter-spacing: 0.6px;
+  cursor: pointer;
+  box-shadow: 0 12px 40px rgba(255, 140, 60, 0.16),
+    0 6px 18px rgba(0, 0, 0, 0.6), 0 0 28px rgba(255, 160, 80, 0.08) inset;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+.qm-joinBtn:hover:not(:disabled) {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 60px rgba(255, 140, 60, 0.2), 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.qm-joinBtn:disabled {
+  opacity: 0.8;
+  cursor: wait;
+  transform: none;
+  box-shadow: none;
+}
+
+/* actions row (create / clear) */
+.qm-actionsRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+}
+.qm-ghost {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  padding: 10px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.qm-ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.qm-clear {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 10px 14px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qm-clear:hover {
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.08);
+}
+
+.qm-clear:active {
+  transform: scale(0.96);
+}
+
+/* tip */
+.qm-tip {
+  color: var(--muted);
   display: block;
+  margin-top: 12px;
+  font-size: 0.95rem;
 }
 
-/* === Tablet and Larger Screens (min-width: 768px) === */
-/* If the screen width is 768px or wider, these styles will apply,
-  changing the layout to be side-by-side.
-*/
-@media (min-width: 768px) {
-  .meetContainer {
-    flex-direction: row; /* Change to a horizontal layout */
-  }
+/* RIGHT PANEL */
+.qm-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qm-panel {
+  width: min(820px, 92%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  border-radius: 18px;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: var(--panel-shadow);
+  backdrop-filter: blur(10px) saturate(120%);
+}
 
-  .leftPanel {
-    flex-basis: 50%; /* Takes up 60% of the container's width */
-    height: calc(100vh - 70px); /* Fill the viewport height minus the navbar */
-    overflow-y: auto; /* Allow scrolling if content is too tall */
-    align-items: flex-start; /* Align content to the left */
-    text-align: left;
-    padding: 40px 5%;
-  }
+.qm-hero {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
+}
 
-  .rightPanel {
-    flex-basis: 50%; /* Takes up 40% of the container's width */
-    height: calc(100vh - 70px);
-    overflow-y: auto;
-     background: rgb(240, 240, 240);/* 
-    Re-apply background for desktop view */
-    
+/* FOOTER */
+.qm-footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 18px;
+}
+
+/* DIALOG */
+
+.MuiDialog-paper {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(0, 0, 0, 0.7)
+  ) !important;
+  backdrop-filter: blur(20px) saturate(150%) !important;
+  border-radius: 18px !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8) !important;
+  color: var(--text) !important;
+}
+
+/* Dialog title styling */
+.MuiDialogTitle-root {
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  padding-bottom: 8px !important;
+}
+
+/* New classes for consistent dialog button styling */
+.qm-dialog-btn-primary {
+  background: linear-gradient(
+    180deg,
+    var(--accent),
+    var(--accent-2)
+  ) !important;
+  color: #0b0b0b !important;
+  font-weight: 800 !important;
+  border-radius: 12px !important;
+  text-transform: none !important;
+  padding: 8px 22px !important;
+  box-shadow: 0 4px 15px rgba(255, 140, 60, 0.3);
+  transition: transform 0.1s ease, box-shadow 0.1s ease !important;
+}
+.qm-dialog-btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 140, 60, 0.4);
+}
+
+/* The Secondary "Ghost" Button */
+.qm-dialog-btn-secondary {
+  color: var(--muted) !important;
+  text-transform: none !important;
+  font-weight: 700 !important;
+  border-radius: 10px !important;
+  padding: 8px 16px !important;
+  border: 1px solid transparent !important;
+}
+.qm-dialog-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* responsive */
+@media (max-width: 980px) {
+  .qm-main {
+    grid-template-columns: 1fr;
+    padding: 28px;
+    gap: 22px;
+  }
+  .qm-panel {
+    width: 94%;
+    padding: 18px;
+    border-radius: 14px;
+  }
+  .qm-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .qm-controls .MuiOutlinedInput-root {
+    width: 100% !important;
+    max-width: 560px;
+  }
+  .qm-joinBtn {
+    width: 100%;
+    max-width: 360px;
+  }
+  .qm-left {
+    align-items: center;
+    text-align: center;
+  }
+  .qm-actionsRow {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  .qm-ghost,
+  .qm-clear {
+    width: 100%;
+    max-width: 360px;
   }
 }
 
-/* === Large Desktop Screens (Optional) === */
-/* You can add another breakpoint for very large screens if needed */
-@media (min-width: 1200px) {
-  .leftPanel,
-  .navBar {
-    padding-left: 10%; /* Increase padding on very wide screens */
-    padding-right: 10%;
+/* small phones */
+@media (max-width: 520px) {
+  .qm-navbar {
+    padding: 10px 14px;
+    height: 56px;
   }
-  
+  .qm-title {
+    font-size: 16px;
+  }
+  .qm-head {
+    font-size: 1.3rem;
+  }
+  .qm-lead {
+    font-size: 0.95rem;
+  }
+  .qm-panel {
+    padding: 12px;
+  }
+}
+
+/* focused inputs accessibility */
+.MuiOutlinedInput-root.Mui-focused {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  border-radius: 12px;
 }

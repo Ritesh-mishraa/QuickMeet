@@ -1,311 +1,79 @@
-// import * as React from "react";
-// import axios from "axios";
-// import { jwtDecode } from "jwt-decode";
-// import {GoogleLogin} from '@react-oauth/google'; 
-// import { useNavigate } from "react-router-dom";
-// import Avatar from "@mui/material/Avatar";
-// import Button from "@mui/material/Button";
-// import CssBaseline from "@mui/material/CssBaseline";
-// import TextField from "@mui/material/TextField";
-// import Box from "@mui/material/Box";
-// import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-// import Typography from "@mui/material/Typography";
-// import Container from "@mui/material/Container";
-// import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import { AuthContext } from "../context/AuthContext";
-// import Snackbar from "@mui/material/Snackbar";
-// import servers from "../environment";
-
-// const theme = createTheme();
-
-// export default function Authentication() {
-//   const navigate = useNavigate();
-
-//   const [username, setUsername] = React.useState("");
-//   const [password, setPassword] = React.useState("");
-//   const [name, setName] = React.useState("");
-//   const [email, setEmail] = React.useState("");
-//   const [error, setError] = React.useState("");
-//   const [message, setMessage] = React.useState("");
-//   const [formState, setFormState] = React.useState(0); // 0 = Login, 1 = Register
-//   const [open, setOpen] = React.useState(false);
-
-   
-
-
-//   const { handleRegister, handleLogin } = React.useContext(AuthContext);
-
-//   const handleAuth = async () => {
-//     try {
-//       if (formState === 0) {
-//         // Login - add validation
-//         if (!username.trim() || !password.trim()) {
-//           throw new Error("Username and password are required");
-//         }
-//         const result = await handleLogin(username, password);
-//         console.log("Login success:", result);
-//         setMessage("Login successful!");
-//       } else {
-//         // Register - add validation
-//         if (
-//           !name.trim() ||
-//           !username.trim() ||
-//           !password.trim() ||
-//           !email.trim()
-//         ) {
-//           throw new Error("All fields are required");
-//         }
-//         const result = await handleRegister(name, username, password, email);
-//         console.log("Register success:", result);
-//         setMessage(result || "User registered successfully!");
-//         setFormState(0);
-//         // Clear form with empty strings
-//         setUsername("");
-//         setPassword("");
-//         setEmail("");
-//         setName("");
-//       }
-//       setError("");
-//       setOpen(true);
-//     } catch (err) {
-//       console.error("Error caught in frontend:", err);
-//       const msg =
-//         err?.response?.data?.message || err.message || "Something went wrong";
-//       setError(msg);
-//       setOpen(true);
-//     }
-//   };
-
-
-//   const handleGoogleSuccess = async (credentialResponse) => {
-//     try {
-//       const token = credentialResponse.credential;
-//       const decoded = jwtDecode(token);
-
-//       // Send token to backend
-//      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/users/google-login`, { token });
-
-//       localStorage.setItem("token", res.data.token);
-//       setMessage("Google Login successful!");
-//       setOpen(true);
-
-//       navigate("/home"); // redirect after login
-//     } catch (err) {
-//       console.error("Google login failed:", err);
-//       setError("Google login failed");
-//       setOpen(true);
-//     }
-//   };
-
-//   return (
-//     <ThemeProvider theme={theme}>
-//       <Container component="main" maxWidth="xs">
-//         <CssBaseline />
-//         <Box
-//           sx={{
-//             marginTop: 8,
-//             display: "flex",
-//             flexDirection: "column",
-//             alignItems: "center",
-//           }}
-//         >
-//           <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
-//             <LockOutlinedIcon />
-//           </Avatar>
-//           <Typography component="h1" variant="h5">
-//             {formState === 0 ? "Sign In" : "Sign Up"}
-//           </Typography>
-
-//           <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
-//             <Button
-//               variant={formState === 0 ? "contained" : "outlined"}
-//               color="primary"
-//               onClick={() => setFormState(0)}
-//             >
-//               Sign In
-//             </Button>
-//             <Button
-//               variant={formState === 1 ? "contained" : "outlined"}
-//               color="primary"
-//               onClick={() => setFormState(1)}
-//             >
-//               Sign Up
-//             </Button>
-//           </Box>
-
-//           <Box component="form" noValidate sx={{ mt: 3 }}>
-//             {formState === 1 && (
-//               <>
-//                 <TextField
-//                   margin="normal"
-//                   required
-//                   fullWidth
-//                   label="Full Name"
-//                   value={name}
-//                   onChange={(e) => setName(e.target.value)}
-//                 />
-//                 <TextField
-//                   margin="normal"
-//                   required
-//                   fullWidth
-//                   label="Email"
-//                   type="email"
-//                   value={email}
-//                   onChange={(e) => setEmail(e.target.value)}
-//                 />
-//               </>
-//             )}
-
-//             <TextField
-//               margin="normal"
-//               required
-//               fullWidth
-//               label="Username"
-//               value={username}
-//               onChange={(e) => setUsername(e.target.value)}
-//             />
-//             <TextField
-//               margin="normal"
-//               required
-//               fullWidth
-//               label="Password"
-//               type="password"
-//               value={password}
-//               onChange={(e) => setPassword(e.target.value)}
-//             />
-
-//             {formState === 0 ? (
-//               <Typography
-//                 variant="body2"
-//                 sx={{ mt: 1, cursor: "pointer", color: "primary.main" }}
-//                 onClick={() => navigate("/forgot-password")}
-//               >
-//                 Forgot Password?
-//               </Typography>
-//             ) : null}
-
-//             {error && <Typography color="error">{error}</Typography>}
-
-//             <Button
-//               type="button"
-//               fullWidth
-//               variant="contained"
-//               sx={{ mt: 3, mb: 2 }}
-//               onClick={handleAuth}
-//             >
-//               {formState === 0 ? "Login" : "Register"}
-//             </Button>
-//           </Box>
-
-//           {formState === 1 && (
-//              <Typography variant="body2" sx={{ mt: 2 }}>
-//               Or continue with
-//             </Typography>
-//           )}
-//           <GoogleLogin onSuccess={handleGoogleSuccess} onError={() => setError("Google Login Failed")} />
-//         </Box>
-
-//         <Snackbar
-//           open={open}
-//           autoHideDuration={4000}
-//           message={message}
-//           onClose={() => setOpen(false)}
-//         />
-//       </Container>
-//     </ThemeProvider>
-//   );
-// }
-
-
-
-
 import * as React from "react";
 import axios from "axios";
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Divider from "@mui/material/Divider";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { AuthContext } from "../context/AuthContext";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
-import Navbar from "./navbar.jsx";
 
-const theme = createTheme();
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Box,
+  Typography,
+  Divider,
+  Snackbar,
+  Alert,
+  Paper,
+  Tabs,
+  Tab,
+  CircularProgress,
+  IconButton,
+} from "@mui/material";
+
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "./theme";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Authentication() {
   const navigate = useNavigate();
+  const { handleRegister, handleLogin } = React.useContext(AuthContext);
 
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
+
+  const [formState, setFormState] = React.useState(0);
   const [error, setError] = React.useState("");
   const [message, setMessage] = React.useState("");
-  const [formState, setFormState] = React.useState(0); // 0 = Login, 1 = Register
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
-  const { handleRegister, handleLogin } = React.useContext(AuthContext);
-
-  // Email validation helper
-  const isValidEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleAuth = async () => {
     setLoading(true);
     try {
       if (formState === 0) {
-        // Login validation
         if (!username.trim() || !password.trim()) {
           throw new Error("Username and password are required");
         }
-        const result = await handleLogin(username, password);
-        console.log("Login success:", result);
+        await handleLogin(username, password);
         setMessage("Login successful!");
-        setError("");
       } else {
-        // Register validation
-        if (!name.trim() || !username.trim() || !password.trim() || !email.trim()) {
+        if (!name || !username || !password || !email)
           throw new Error("All fields are required");
-        }
-        
-        if (!isValidEmail(email)) {
-          throw new Error("Please enter a valid email address");
-        }
-        
-        if (password.length < 6) {
-          throw new Error("Password must be at least 6 characters long");
-        }
 
-        const result = await handleRegister(name, username, password, email);
-        console.log("Register success:", result);
-        setMessage(result || "User registered successfully!");
-        setError("");
+        if (!isValidEmail(email)) throw new Error("Invalid email");
+        if (password.length < 6)
+          throw new Error("Password must be at least 6 characters");
+
+        await handleRegister(name, username, password, email);
+        setMessage("Registration successful! Please login.");
         setFormState(0);
-        
-        // Clear form
+
+        setName("");
+        setEmail("");
         setUsername("");
         setPassword("");
-        setEmail("");
-        setName("");
       }
-      setOpen(true);
     } catch (err) {
-      console.error("Error caught in frontend:", err);
-      const msg = err?.response?.data?.message || err.message || "Something went wrong";
-      setError(msg);
-      setMessage("");
-      setOpen(true);
+      setError(err?.response?.data?.message || err.message);
     } finally {
+      setOpen(true);
       setLoading(false);
     }
   };
@@ -314,34 +82,28 @@ export default function Authentication() {
     setLoading(true);
     try {
       const token = credentialResponse.credential;
-      
+
       if (!token) {
         throw new Error("No token received from Google");
       }
 
-      // Backend URL with fallback
-      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
-      
+      const backendUrl =
+        process.env.REACT_APP_BACKEND_URL || "http://localhost:8000";
+
       const response = await axios.post(
-        `${backendUrl}/api/v1/users/google-login`, 
+        `${backendUrl}/api/v1/users/google-login`,
         { token },
         {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          timeout: 10000 // 10 second timeout
+          headers: { "Content-Type": "application/json" },
+          timeout: 10000,
         }
       );
 
-      // Validate response structure
       if (!response.data || !response.data.token) {
         throw new Error("Invalid response from server");
       }
 
-      // Store token and user data
       localStorage.setItem("token", response.data.token);
-      
-      // Store user data if available
       if (response.data.user) {
         localStorage.setItem("user", JSON.stringify(response.data.user));
       }
@@ -350,27 +112,24 @@ export default function Authentication() {
       setError("");
       setOpen(true);
 
-      // Redirect after a brief delay to show success message
       setTimeout(() => {
         navigate("/home");
       }, 1500);
-
     } catch (err) {
       console.error("Google login failed:", err);
-      
       let errorMessage = "Google login failed";
-      
+
       if (err.response) {
-        // Server responded with error status
-        errorMessage = err.response.data?.error || err.response.data?.message || errorMessage;
+        errorMessage =
+          err.response.data?.error ||
+          err.response.data?.message ||
+          errorMessage;
       } else if (err.request) {
-        // Request was made but no response received
         errorMessage = "Network error. Please check your connection.";
-      } else if (err.code === 'ECONNABORTED') {
-        // Request timeout
+      } else if (err.code === "ECONNABORTED") {
         errorMessage = "Request timeout. Please try again.";
       }
-      
+
       setError(errorMessage);
       setMessage("");
       setOpen(true);
@@ -386,103 +145,193 @@ export default function Authentication() {
     setOpen(true);
   };
 
-  const handleFormStateChange = (newState) => {
-    setFormState(newState);
-    setError("");
-    setMessage("");
-  };
-
   return (
-    
     <ThemeProvider theme={theme}>
-      {/* <Navbar /> */}
-      <Container component="main" maxWidth="xs" style={{ marginTop: '10px' } }>
-        <CssBaseline />
-        <Box
+      <CssBaseline />
+
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+          background: `
+            radial-gradient(circle at 15% 15%, rgba(255, 152, 57, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 85% 85%, rgba(125, 42, 232, 0.15) 0%, transparent 50%),
+            #050511
+          `,
+          backgroundSize: "cover",
+          px: { xs: 1.5, sm: 3, md: 4 },
+          py: { xs: 2, sm: 3 },
+          position: "relative",
+        }}
+      >
+        <IconButton
+          onClick={() => navigate("/")}
           sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            position: "absolute",
+            top: { xs: 10, sm: 20, md: 25 },
+            left: { xs: 10, sm: 20, md: 25 },
+            color: "white",
+            background: "rgba(255,255,255,0.05)",
+            backdropFilter: "blur(10px)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            borderRadius: 2,
+            p: { xs: 0.8, sm: 1.2 },
+            transition: "all 0.2s",
+            "&:hover": {
+              background: "rgba(255,255,255,0.15)",
+              transform: "translateY(-2px)",
+            },
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            {formState === 0 ? "Sign In" : "Sign Up"}
-          </Typography>
+          <ArrowBackIcon sx={{ fontSize: { xs: 22, sm: 24, md: 26 } }} />
+        </IconButton>
 
-          {/* Form State Toggle */}
-          <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
-            <Button
-              variant={formState === 0 ? "contained" : "outlined"}
-              color="primary"
-              onClick={() => handleFormStateChange(0)}
-              disabled={loading}
+        <Paper
+          elevation={24}
+          sx={{
+            width: "100%",
+            maxWidth: { xs: 340, sm: 420, md: 430 },
+            p: { xs: 2.5, sm: 3.5, md: 4 },
+            borderRadius: 4,
+            background: "rgba(255, 255, 255, 0.03)",
+            backdropFilter: "blur(20px)",
+            border: "1px solid rgba(255, 255, 255, 0.08)",
+            boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.3)",
+          }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+            <Avatar
+              sx={{
+                bgcolor: "transparent",
+                border: "2px solid #FF9839",
+                width: { xs: 50, sm: 60 },
+                height: { xs: 50, sm: 60 },
+                color: "#FF9839",
+              }}
             >
-              Sign In
-            </Button>
-            <Button
-              variant={formState === 1 ? "contained" : "outlined"}
-              color="primary"
-              onClick={() => handleFormStateChange(1)}
-              disabled={loading}
-            >
-              Sign Up
-            </Button>
+              <LockOutlinedIcon fontSize="large" />
+            </Avatar>
           </Box>
 
-          {/* Traditional Login/Register Form */}
-          <Box component="form" noValidate sx={{ mt: 3, width: '100%' }}>
+          <Typography
+            variant="h4"
+            align="center"
+            sx={{
+              fontWeight: 800,
+              mb: 1.5,
+              fontSize: { xs: "1.8rem", sm: "2rem" },
+              background: "linear-gradient(90deg, #fff, #ccc)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            QuickMeet
+          </Typography>
+
+          <Tabs
+            value={formState}
+            onChange={(e, v) => {
+              setFormState(v);
+              setError("");
+              setMessage("");
+            }}
+            centered
+            sx={{
+              "& .MuiTab-root": {
+                color: "#888",
+                fontWeight: 600,
+                fontSize: { xs: "0.85rem", sm: "1rem" },
+                transition: "color 0.2s",
+                "&:hover": { color: "#fff" },
+              },
+              "& .Mui-selected": {
+                color: "#FF9839 !important",
+              },
+              "& .MuiTabs-indicator": {
+                backgroundColor: "#FF9839",
+              },
+              mb: { xs: 2, sm: 3 },
+            }}
+          >
+            <Tab label="Login" />
+            <Tab label="Register" />
+          </Tabs>
+
+          <Box sx={{ mt: { xs: 1, sm: 2 } }}>
             {formState === 1 && (
-              <>
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="Full Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  disabled={loading}
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="Email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={loading}
-                />
-              </>
+              <TextField
+                fullWidth
+                label="Email"
+                margin="normal"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    color: "white",
+                    "& fieldset": { borderColor: "rgba(255,255,255,0.2)" },
+                    "&:hover fieldset": {
+                      borderColor: "rgba(255,255,255,0.4)",
+                    },
+                    "&.Mui-focused fieldset": { borderColor: "#FF9839" },
+                  },
+                  "& .MuiInputLabel-root": { color: "#aaa" },
+                  "& .MuiInputLabel-root.Mui-focused": { color: "#FF9839" },
+                }}
+              />
             )}
 
             <TextField
-              margin="normal"
-              required
               fullWidth
               label="Username"
+              margin="normal"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              disabled={loading}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  color: "white",
+                  "& fieldset": { borderColor: "rgba(255,255,255,0.2)" },
+                  "&:hover fieldset": { borderColor: "rgba(255,255,255,0.4)" },
+                  "&.Mui-focused fieldset": { borderColor: "#FF9839" },
+                },
+                "& .MuiInputLabel-root": { color: "#aaa" },
+                "& .MuiInputLabel-root.Mui-focused": { color: "#FF9839" },
+              }}
             />
+
             <TextField
-              margin="normal"
-              required
               fullWidth
               label="Password"
               type="password"
+              margin="normal"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              disabled={loading}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  color: "white",
+                  "& fieldset": { borderColor: "rgba(255,255,255,0.2)" },
+                  "&:hover fieldset": { borderColor: "rgba(255,255,255,0.4)" },
+                  "&.Mui-focused fieldset": { borderColor: "#FF9839" },
+                },
+                "& .MuiInputLabel-root": { color: "#aaa" },
+                "& .MuiInputLabel-root.Mui-focused": { color: "#FF9839" },
+              }}
             />
 
             {formState === 0 && (
               <Typography
                 variant="body2"
-                sx={{ mt: 1, cursor: "pointer", color: "primary.main" }}
+                align="right"
+                sx={{
+                  color: "#FF9839",
+                  cursor: "pointer",
+                  mt: 1,
+                  fontWeight: 500,
+                  fontSize: { xs: "0.8rem", sm: "0.9rem" },
+                  "&:hover": { textDecoration: "underline" },
+                }}
                 onClick={() => navigate("/forgot-password")}
               >
                 Forgot Password?
@@ -490,54 +339,77 @@ export default function Authentication() {
             )}
 
             <Button
-              type="button"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              size="large"
+              sx={{
+                mt: 3,
+                py: { xs: 1.2, sm: 1.4 },
+                borderRadius: 3,
+                fontSize: { xs: "0.9rem", sm: "1rem" },
+                fontWeight: 800,
+                textTransform: "none",
+                background: "linear-gradient(135deg, #FF9839 0%, #ff6b39 100%)",
+                boxShadow: "0 4px 15px rgba(255,152,57,0.3)",
+                transition: "transform 0.2s",
+                "&:hover": {
+                  transform: "translateY(-2px)",
+                  boxShadow: "0 6px 20px rgba(255,152,57,0.4)",
+                },
+              }}
               onClick={handleAuth}
               disabled={loading}
             >
-              {loading ? "Processing..." : (formState === 0 ? "Login" : "Register")}
+              {loading ? (
+                <CircularProgress size={24} sx={{ color: "white" }} />
+              ) : formState === 0 ? (
+                "Login"
+              ) : (
+                "Register"
+              )}
             </Button>
           </Box>
 
-          {/* Divider */}
-          <Box sx={{ width: '100%', marginBottom: 2 }}>
-            <Divider>
-              <Typography variant="body2" color="text.secondary">
-                Or continue with
-              </Typography>
-            </Divider>
-          </Box>
+          <Divider
+            sx={{ my: { xs: 2, sm: 3 }, borderColor: "rgba(255,255,255,0.1)" }}
+          >
+            <Typography
+              sx={{ fontSize: { xs: "0.8rem", sm: "0.9rem" }, color: "#888" }}
+            >
+              Or continue with
+            </Typography>
+          </Divider>
 
-          {/* Google Login Button */}
-          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', paddingBottom: 2, marginBottom: 2 }}>
+          {/* 3. REPLACED CUSTOM BUTTON WITH OFFICIAL GOOGLE COMPONENT */}
+          <Box
+            sx={{ width: "100%", display: "flex", justifyContent: "center" }}
+          >
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
               onError={handleGoogleError}
-              disabled={loading}
-              width="100%"
+              theme="filled_black"
+              shape="pill"
+              size="large"
+              width="300" // Approximate width to match inputs
             />
           </Box>
-        </Box>
+        </Paper>
 
-        {/* Snackbar for messages */}
         <Snackbar
           open={open}
           autoHideDuration={4000}
           onClose={() => setOpen(false)}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         >
-          <Alert 
-            onClose={() => setOpen(false)} 
+          <Alert
             severity={error ? "error" : "success"}
-            sx={{ width: '100%' }}
+            variant="filled"
+            sx={{ borderRadius: 2 }}
           >
             {error || message}
           </Alert>
         </Snackbar>
-      </Container>
+      </Box>
     </ThemeProvider>
   );
 }
-
