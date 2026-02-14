@@ -9,7 +9,7 @@ import cors from 'cors';
 import { connectToSocket } from './src/controllers/socketManager.js';
 import userRoutes from './src/routes/user.routes.js';
 
-dotenv.config({ path: '../.env', debug: true }); 
+dotenv.config({ path: './.env', debug: true }); 
 const app = express();
 const server = createServer(app);
 const io = connectToSocket(server);
@@ -37,30 +37,5 @@ app.use("/api/v1/users", userRoutes);
 
 
 
-const start = async () => {
-    const mongoUri = process.env.MONGO_URI;
-    if (!mongoUri) {
-        
-        process.exit(1); // Exit the process with an error code
-    }
-
-    try {
-        await mongoose.connect(mongoUri); // Use MONGO_URI from .env
-        console.log(`MongoDB connected successfully`);
-        server.listen(app.get("port"), () => {
-            console.log(`Server is running on port ${app.get("port")}`);
-        });
-    } catch (error) {
-        console.error("Error connecting to MongoDB:", error.message);
-        process.exit(1); // Exit the process with an error code
-    }
-};
-
-
-
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-});
-
-start();
+// Export app and server for server.js
+export { app, server };
