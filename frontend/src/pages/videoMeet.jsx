@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 import {
   Badge,
@@ -30,6 +31,8 @@ const peerConfigConnections = {
 };
 
 export default function VideoMeetComponent() {
+  const { url } = useParams();
+  const navigate = useNavigate();
   const socketRef = useRef();
   const socketIdRef = useRef();
   const localVideoref = useRef();
@@ -101,14 +104,18 @@ export default function VideoMeetComponent() {
       try {
         let tracks = localVideoref.current.srcObject.getTracks();
         tracks.forEach((track) => track.stop());
-      } catch (e) {}
+      } catch (e) {
+        console.error(e);
+      }
     }
   };
 
   const getUserMediaSuccess = (stream) => {
     try {
       window.localStream.getTracks().forEach((track) => track.stop());
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
     window.localStream = stream;
     if (localVideoref.current) localVideoref.current.srcObject = stream;
 
@@ -142,7 +149,9 @@ export default function VideoMeetComponent() {
   const getDislayMediaSuccess = (stream) => {
     try {
       window.localStream.getTracks().forEach((track) => track.stop());
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
 
     window.localStream = stream;
     if (localVideoref.current) localVideoref.current.srcObject = stream;
@@ -166,14 +175,16 @@ export default function VideoMeetComponent() {
 
     stream.getTracks().forEach(
       (track) =>
-        (track.onended = () => {
-          setScreen(false);
-          try {
-            let tracks = localVideoref.current.srcObject.getTracks();
-            tracks.forEach((track) => track.stop());
-          } catch (e) {}
-          getUserMedia();
-        })
+      (track.onended = () => {
+        setScreen(false);
+        try {
+          let tracks = localVideoref.current.srcObject.getTracks();
+          tracks.forEach((track) => track.stop());
+        } catch (e) {
+          console.error(e);
+        }
+        getUserMedia();
+      })
     );
   };
 
@@ -261,7 +272,7 @@ export default function VideoMeetComponent() {
   };
 
   const gotMessageFromServer = (fromId, message) => {
-    var signal = JSON.parse(message);
+    const signal = JSON.parse(message);
     if (fromId !== socketIdRef.current) {
       if (signal.sdp) {
         connections.current[fromId]
@@ -324,12 +335,14 @@ export default function VideoMeetComponent() {
     try {
       let tracks = localVideoref.current?.srcObject?.getTracks();
       tracks?.forEach((track) => track.stop());
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
     setAskForUsername(true);
     setUsername("");
     setVideos([]);
     setModal(false);
-    window.location.href = "/home";
+    navigate("/home");
   };
 
   const addMessage = (data, sender, socketIdSender) => {
@@ -425,6 +438,11 @@ export default function VideoMeetComponent() {
             )}
           </Box>
 
+          <Typography variant="h5" sx={{ color: "white", textAlign: "center" }}>
+            Code: {url}
+          </Typography>
+
+
           <TextField
             fullWidth
             placeholder="Enter your name"
@@ -501,10 +519,10 @@ export default function VideoMeetComponent() {
               videos.length === 0
                 ? "1fr"
                 : videos.length <= 1
-                ? "1fr"
-                : videos.length <= 4
-                ? "1fr 1fr"
-                : "repeat(3, 1fr)",
+                  ? "1fr"
+                  : videos.length <= 4
+                    ? "1fr 1fr"
+                    : "repeat(3, 1fr)",
             gap: 2,
             alignContent: "center",
             justifyContent: "center",
