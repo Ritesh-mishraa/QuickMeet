@@ -1,8 +1,8 @@
 import { Server } from "socket.io"
 
-let connections = {}
-let messages = {}
-let timeOnline = {}
+const connections = {}
+const messages = {}
+const timeOnline = {}
 
 export const connectToSocket = (server) => {
     const io = new Server(server, {
@@ -80,31 +80,27 @@ export const connectToSocket = (server) => {
 
         socket.on("disconnect", () => {
 
-            var diffTime = Math.abs(timeOnline[socket.id] - new Date())
+            const diffTime = Math.abs(timeOnline[socket.id] - new Date())
+            let key
 
-            var key
+            for (const [k, v] of Object.entries(connections)) {
+                if (v.includes(socket.id)) {
+                    key = k;
+                    break;
+                }
+            }
 
-            for (const [k, v] of JSON.parse(JSON.stringify(Object.entries(connections)))) {
-
-                for (let a = 0; a < v.length; ++a) {
-                    if (v[a] === socket.id) {
-                        key = k
-
-                        for (let a = 0; a < connections[key].length; ++a) {
-                            io.to(connections[key][a]).emit('user-left', socket.id)
-                        }
-
-                        var index = connections[key].indexOf(socket.id)
-
-                        connections[key].splice(index, 1)
-
-
-                        if (connections[key].length === 0) {
-                            delete connections[key]
-                        }
-                    }
+            if (key) {
+                for (let a = 0; a < connections[key].length; ++a) {
+                    io.to(connections[key][a]).emit('user-left', socket.id)
                 }
 
+                const index = connections[key].indexOf(socket.id)
+                connections[key].splice(index, 1)
+
+                if (connections[key].length === 0) {
+                    delete connections[key]
+                }
             }
 
 
