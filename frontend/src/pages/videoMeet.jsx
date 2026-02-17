@@ -91,6 +91,7 @@ export default function VideoMeetComponent() {
       }
     } catch (error) {
       console.log(error);
+      alert("Error getting media permissions: " + error.message + "\n\nNote: Camera/Mic access requires HTTPS or localhost. If you are on a LAN IP (e.g. 192.168.x.x), browsers will BLOCK access.");
     }
   };
 

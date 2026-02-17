@@ -16,7 +16,15 @@ const client = axios.create({
 export const AuthProvider = ({ children }) => {
   const authContext = useContext(AuthContext);
 
-  const [userData, setUserData] = useState(authContext);
+  const [userData, setUserData] = useState(() => {
+    try {
+      const savedUser = localStorage.getItem("user");
+      return savedUser ? JSON.parse(savedUser) : null;
+    } catch (error) {
+      console.error("Error parsing user data from localStorage:", error);
+      return null;
+    }
+  });
 
   const router = useNavigate();
 
@@ -47,6 +55,8 @@ export const AuthProvider = ({ children }) => {
 
       if (request.status === StatusCodes.OK) {
         localStorage.setItem("token", request.data.token);
+        localStorage.setItem("user", JSON.stringify(request.data.user));
+        setUserData(request.data.user);
         router("/home");
       }
     } catch (err) {

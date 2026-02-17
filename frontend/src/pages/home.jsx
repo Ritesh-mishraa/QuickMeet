@@ -57,7 +57,7 @@ function HomeComponent() {
     document.documentElement.setAttribute("data-theme", accentMode);
     try {
       localStorage.setItem("qm-accent-mode", accentMode);
-    } catch {}
+    } catch { }
   }, [accentMode]);
 
   const showSnack = (message, severity = "info") =>
@@ -123,7 +123,7 @@ function HomeComponent() {
       await addToUserHistory(code);
       try {
         await navigator.clipboard.writeText(code);
-      } catch {}
+      } catch { }
       showSnack("Created meeting — joining now", "success");
       setCreateOpen(false);
       setTimeout(() => navigate(`/${code}`), 450);
@@ -310,6 +310,7 @@ function HomeComponent() {
           {!createdCode ? (
             <>
               <TextField
+                autoFocus
                 fullWidth
                 placeholder="Optional title"
                 label="Optional title"
