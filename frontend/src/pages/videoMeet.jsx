@@ -193,7 +193,7 @@ export default function VideoMeetComponent() {
 
     socketRef.current.on("signal", gotMessageFromServer);
     socketRef.current.on("connect", () => {
-      socketRef.current.emit("join-call", window.location.href);
+      socketRef.current.emit("join-call", url);
       socketIdRef.current = socketRef.current.id;
 
       socketRef.current.on("chat-message", addMessage);
